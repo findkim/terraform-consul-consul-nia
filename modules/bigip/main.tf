@@ -5,14 +5,16 @@ resource "bigip_as3" "consul_services" {
     {
       tenant_name = jsonencode("consul-nma")
       # Template each service declaration to insert into the as3 tenant declaration
-      service_declarations = jsonencode([for s in var.services : templatefile(
+      # TODO still need to fix up templating for service declaration to change from
+      # `{ "service1": {}, "service2": {} }` to `"service1": {}, "service2": {}`
+      service_declarations = jsonencode({for s in var.services : s.name => templatefile(
         "as3_service_declaration.tmpl",
         {
           service           = jsonencode(each.name)
           addresses         = jsonencode(each.addresses)
           virtual_addresses = jsonencode(var.virtual_address[each.name])
         }
-      )])
+      )})
     }
   )
 }
