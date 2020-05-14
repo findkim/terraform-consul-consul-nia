@@ -1,11 +1,12 @@
 resource "panos_application_object" "service" {
+  # https://docs.paloaltonetworks.com/pan-os/8-1/pan-os-web-interface-help/objects/objects-applications/applications-overview
   for_each = var.services
 
   name        = each.value["name"]
   description = each.value["description"]
-  category    = "consul-nma"
-  subcategory = "terraform"
-  technology  = "automated"
+  category    = "business-systems"
+  subcategory = "general-business"
+  technology  = "client-server"
 }
 
 resource "panos_security_policy" "service" {
