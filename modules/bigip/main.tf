@@ -3,7 +3,7 @@ resource "bigip_as3" "consul_services" {
   as3_json = templatefile(
     "as3.tmpl",
     {
-      tenant_name = jsonencode("consul-nma")
+      tenant_name = jsonencode("consul-sna")
       # Template each service declaration to insert into the as3 tenant declaration
       # TODO still need to fix up templating for service declaration to change from
       # `{ "service1": {}, "service2": {} }` to `"service1": {}, "service2": {}`
@@ -26,7 +26,7 @@ variable "virtual_addresses" {
 }
 
 variable "services" {
-  description = "Consul services monitored by NMA"
+  description = "Consul services monitored by SNA"
   type = list(object({
     # Name of the service
     name = string
@@ -37,5 +37,4 @@ variable "services" {
     # List of virtual addresses load balanced services
     virtual_addresses = list(string)
   }))
-  default = []
 }

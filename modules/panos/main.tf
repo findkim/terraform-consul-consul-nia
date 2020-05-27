@@ -65,7 +65,7 @@ resource "panos_security_rule_group" "service" {
 }
 
 variable "services" {
-  description = "Consul services monitored by NMA"
+  description = "Consul services monitored by SNA"
   type = map(object({
     # Name of the service
     name = string

@@ -10,10 +10,10 @@ terraform {
 
   # backend "consul" {
   #   # Variables are not allowed for address and access_token
-  #   # NMA will need to write these as ENV
+  #   # SNA will need to write these as ENV
   #   # address      = var.consul.address
   #   # access_token = var.consul.access_token
   #   scheme       = "https"
-  #   path         = "nma/terraform"
+  #   path         = "consul-sna/terraform"
   # }
 }

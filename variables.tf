@@ -4,7 +4,7 @@
 # }
 
 variable "services" {
-  description = "Consul services monitored by NMA"
+  description = "Consul services monitored by SNA"
   type = map(object({
     # Name of the service
     name = string
@@ -24,7 +24,7 @@ variable "services" {
 }
 
 variable "service_mapping" {
-  description = "A map of provider names to consul service IDs to be managed by NMA"
+  description = "A map of provider names to consul service IDs to be managed by SNA"
   type        = map(list(string))
   default = {
     panos = []
