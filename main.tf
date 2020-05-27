@@ -4,7 +4,7 @@ terraform {
   required_version = "~> 0.12.21"
 
   required_providers {
-    bigip = ">= 1.1.2"
+    # bigip = ">= 1.1.2"
     panos = ">= 1.6.2"
   }
 
@@ -16,8 +16,4 @@ terraform {
   #   scheme       = "https"
   #   path         = "nma/terraform"
   # }
-}
-
-locals {
-  service_names = { for s in var.services : s.name => s }
 }

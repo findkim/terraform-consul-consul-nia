@@ -1,14 +1,11 @@
-# variable "consul" {
+# variable "consul_address" {
 #   description = "Configuration for Consul as a state storage backend"
-#   type = object({
-#     address      = string
-#     access_token = string
-#   })
+#   type        = string
 # }
 
 variable "services" {
   description = "Consul services monitored by NMA"
-  type = list(object({
+  type = map(object({
     # Name of the service
     name = string
     # Description of the service
@@ -21,8 +18,9 @@ variable "services" {
     # List of destination addresses that the service initiates network
     # communication with
     destinations = list(string)
+    # List of virtual addresses load balanced services
+    virtual_addresses = list(string)
   }))
-  default = []
 }
 
 variable "service_mapping" {
@@ -32,12 +30,6 @@ variable "service_mapping" {
     panos = []
     bigip = []
   }
-}
-
-variable "virtual_addressses" {
-  description = "A map of service names to virtual addresses for load balanced services"
-  type        = map(list(string))
-  default     = {}
 }
 
 #
@@ -51,16 +43,17 @@ variable "panos" {
     username = string
     password = string
     api_key  = string
+    protocol = string
     port     = number
     timeout  = number
   })
 }
 
-variable "bigip" {
-  description = "Configuration object for Big-IP provider"
-  type = object({
-    address  = string
-    username = string
-    password = string
-  })
-}
+# variable "bigip" {
+#   description = "Configuration object for Big-IP provider"
+#   type = object({
+#     address  = string
+#     username = string
+#     password = string
+#   })
+# }

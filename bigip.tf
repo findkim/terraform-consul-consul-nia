@@ -4,16 +4,15 @@
 # file will be clobbered. Once module count is supported by Terraform,
 # this templated file will be merged with main.tf.
 
-provider "bigip" {
-  address  = var.bigip.address
-  username = var.bigip.username
-  password = var.bigip.password
-}
+# provider "bigip" {
+#   address  = var.bigip.address
+#   username = var.bigip.username
+#   password = var.bigip.password
+# }
 
-module "bigip" {
-  source = "./modules/bigip"
+# module "bigip" {
+#   source = "./modules/bigip"
 
-  address           = var.bigip.address
-  services          = [for name in var.service_mapping["bigip"] : local.service_names[name]]
-  virtual_addresses = var.virtual_addresses
-}
+#   address           = var.bigip.address
+#   services          = [for name in var.service_mapping["bigip"] : var.services[name]]
+# }

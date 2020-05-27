@@ -7,14 +7,14 @@ resource "bigip_as3" "consul_services" {
       # Template each service declaration to insert into the as3 tenant declaration
       # TODO still need to fix up templating for service declaration to change from
       # `{ "service1": {}, "service2": {} }` to `"service1": {}, "service2": {}`
-      service_declarations = jsonencode({for s in var.services : s.name => templatefile(
+      service_declarations = jsonencode({ for s in var.services : s.name => templatefile(
         "as3_service_declaration.tmpl",
         {
           service           = jsonencode(each.name)
           addresses         = jsonencode(each.addresses)
-          virtual_addresses = jsonencode(var.virtual_address[each.name])
+          virtual_addresses = jsonencode(each.virtual_addresses)
         }
-      )})
+      ) })
     }
   )
 }
@@ -34,12 +34,8 @@ variable "services" {
     description = string
     # List of addresses for instances of the service
     addresses = list(string)
-    # List of source addresses that initiates network communcation with
-    # the service
-    sources = list(string)
-    # List of destination addresses that the service initiates network
-    # communication with
-    destinations = list(string)
+    # List of virtual addresses load balanced services
+    virtual_addresses = list(string)
   }))
   default = []
 }

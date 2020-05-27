@@ -9,12 +9,13 @@ provider "panos" {
   username = var.panos.username
   password = var.panos.password
   api_key  = var.panos.api_key
-  port     = var.panos.port == null ? var.panos.port : 0
-  timeout  = var.panos.timeout == null ? var.panos.timeout : 10
+  protocol = var.panos.protocol != null ? var.panos.protocol : "https"
+  port     = var.panos.port != null ? var.panos.port : 0
+  timeout  = var.panos.timeout != null ? var.panos.timeout : 10
 }
 
 module "panos" {
   source = "./modules/panos"
 
-  services = [for name in var.service_mapping["panos"] : local.service_names[name]]
+  services = { for name in var.service_mapping["panos"] : name => var.services[name] if length(var.services[name].addresses) > 0 }
 }
