@@ -4,7 +4,7 @@
 # }
 
 variable "services" {
-  description = "Consul services monitored by SNA"
+  description = "Consul services monitored by Consul NIA"
   type = map(object({
     # Name of the service
     name = string
@@ -24,7 +24,7 @@ variable "services" {
 }
 
 variable "service_mapping" {
-  description = "A map of provider names to consul service IDs to be managed by SNA"
+  description = "A map of provider names to consul service IDs to be managed by Consul NIA"
   type        = map(list(string))
   default = {
     panos = []
@@ -47,13 +47,15 @@ variable "panos" {
     port     = number
     timeout  = number
   })
+  default = null
 }
 
-# variable "bigip" {
-#   description = "Configuration object for Big-IP provider"
-#   type = object({
-#     address  = string
-#     username = string
-#     password = string
-#   })
-# }
+variable "bigip" {
+  description = "Configuration object for Big-IP provider"
+  type = object({
+    address  = string
+    username = string
+    password = string
+  })
+  default = null
+}

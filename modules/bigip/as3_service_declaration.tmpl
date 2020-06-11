@@ -4,10 +4,10 @@
                 "serviceMain": {
                     "class": "Service_HTTP",
                     "virtualAddresses": ${virtual_addresses},
-                    "pool": "sna_pool_1",
+                    "pool": "consul_nia_pool_1",
                     "persistenceMethods": []
                 },
-                "sna_pool_1": {
+                "consul_nia_pool_1": {
                     "class": "Pool",
                     "monitors": [
                         "http"

@@ -1,4 +1,4 @@
-# Consul SNA: PANOS Module
+# Consul NIA: PANOS Module
 
 Terraform module manages PANOS firewall security policy rules for Consul
 services.
@@ -12,15 +12,15 @@ that have it configured as an upstream is the source. For outbound requests,
 the service is the source and its upstreams are the destinations.
 
 Each resource and security policy rule managed by this module is tagged with
-`consul-sna` to help identify automated resources created by Consul SNA.
+`consul-nia` to help identify automated resources created by Consul NIA.
 
-**Note**: Commits are handled out-of-band from Terraform and are made by SNA.
+**Note**: Commits are handled out-of-band from Terraform and are made by Consul NIA.
 
 ## Usage
 
 ```hcl
 module "panos" {
-	source = "findkim/terraform-consul-sna//modules/panos"
+	source = "findkim/terraform-consul-nia//modules/panos"
 
 	services = {
 		web: {
