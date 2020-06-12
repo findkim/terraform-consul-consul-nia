@@ -12,7 +12,6 @@ service falls under an application class.
 module "bigip" {
 	source = "findkim/terraform-consul-nia//modules/bigip"
 
-	address = "localhost:8080"
 	services = {
 		web: {
 			name = "web"

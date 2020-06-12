@@ -13,27 +13,12 @@ terraform {
   # }
 }
 
-module "bigip" {
-  source = "./modules/bigip"
-  count  = var.bigip != null ? 1 : 0
-
-  address  = var.bigip.address
-  services = [for name in var.service_mapping["bigip"] : var.services[name]]
-}
-
-
 module "panos" {
   source = "./modules/panos"
   count  = var.panos != null ? 1 : 0
 
   services = { for name in var.service_mapping["panos"] : name => var.services[name] if length(var.services[name].addresses) > 0 }
 }
-
-# provider "bigip" {
-#   address  = var.bigip.address
-#   username = var.bigip.username
-#   password = var.bigip.password
-# }
 
 provider "panos" {
   hostname = var.panos.hostname
@@ -44,3 +29,16 @@ provider "panos" {
   port     = var.panos.port != null ? var.panos.port : 0
   timeout  = var.panos.timeout != null ? var.panos.timeout : 10
 }
+
+# module "bigip" {
+#   source = "./modules/bigip"
+#   count  = var.bigip != null ? 1 : 0
+
+#   services = [for name in var.service_mapping["bigip"] : var.services[name]]
+# }
+
+# provider "bigip" {
+#   address  = var.bigip.address
+#   username = var.bigip.username
+#   password = var.bigip.password
+# }

@@ -28,12 +28,6 @@ resource "bigip_as3" "consul_services" {
   )
 }
 
-variable "virtual_addresses" {
-  description = "Virtual Address for TODO"
-  type        = map(list(string))
-  default     = {}
-}
-
 variable "services" {
   description = "Consul services monitored by Consul NIA"
   type = list(object({
