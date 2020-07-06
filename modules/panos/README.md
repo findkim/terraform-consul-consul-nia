@@ -24,8 +24,8 @@ module "panos" {
 			name         = "web"
 			addresses    = ["192.0.0.1", "192.0.0.2"]
 			sources      = []
-	    destinations = []
-	  }
+			destinations = []
+		}
 	}
 }
 ```

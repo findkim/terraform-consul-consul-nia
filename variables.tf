@@ -28,7 +28,6 @@ variable "service_mapping" {
   type        = map(list(string))
   default = {
     panos = []
-    bigip = []
   }
 }
 
@@ -46,16 +45,6 @@ variable "panos" {
     protocol = string
     port     = number
     timeout  = number
-  })
-  default = null
-}
-
-variable "bigip" {
-  description = "Configuration object for Big-IP provider"
-  type = object({
-    address  = string
-    username = string
-    password = string
   })
   default = null
 }

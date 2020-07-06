@@ -29,16 +29,3 @@ provider "panos" {
   port     = var.panos.port != null ? var.panos.port : 0
   timeout  = var.panos.timeout != null ? var.panos.timeout : 10
 }
-
-# module "bigip" {
-#   source = "./modules/bigip"
-#   count  = var.bigip != null ? 1 : 0
-
-#   services = [for name in var.service_mapping["bigip"] : var.services[name]]
-# }
-
-# provider "bigip" {
-#   address  = var.bigip.address
-#   username = var.bigip.username
-#   password = var.bigip.password
-# }

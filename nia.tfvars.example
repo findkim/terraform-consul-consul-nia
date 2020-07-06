@@ -17,35 +17,28 @@ panos = {
   timeout  = null
 }
 
-bigip = {
-  address  = "bigip-example.com"
-  username = "username"
-  password = "password"
+services = {
+  web : {
+    # Pulled from HCL config
+    name        = "web"
+    description = "frontend web application"
+
+    # Dynamic values discovered from Consul Catalog
+    addresses         = ["192.0.0.1"]
+    sources           = []
+    destinations      = []
+    virtual_addresses = []
+  }
+  api : {
+    name              = "api"
+    description       = "backend API for web application"
+    addresses         = ["192.0.0.13", "192.0.0.14"]
+    sources           = []
+    destinations      = []
+    virtual_addresses = []
+  }
 }
 
 service_mapping = {
-  panos = ["web1", "web2"]
-  bigip = ["web1"]
-}
-
-services = {
-  web1: {
-    # Pulled from HCL config
-    name        = "web1"
-    description = "spiderman"
-
-    # Dynamic values discovered from Consul Catalog
-    addresses         = ["192.0.0.1:8000", "192.0.0.2:8000"]
-    sources           = ["192.0.0.1:8080"]
-    destinations      = []
-    virtual_addresses = []
-  },
-  web2: {
-    name              = "web2"
-    description       = "charlotte"
-    addresses         = ["192.0.0.13:5000"]
-    sources           = ["192.0.0.1:8080"]
-    destinations      = ["192.0.0.1:8080"]
-    virtual_addresses = []
-  }
+  panos = ["web", "api"]
 }
