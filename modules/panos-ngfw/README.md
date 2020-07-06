@@ -1,8 +1,8 @@
-# Consul NIA: PAN-OS Module
+# Consul NIA: PAN-OS NGFW Module
 
-Terraform module manages a PAN-OS firewall security policy rule for Consul
-services. It creates a security policy on a dynamic address group that is
-filtered by address objects with the `consul-nia` tag.
+Terraform module manages a PAN-OS Next Generation Firewall security policy rule
+for Consul services. It creates a security policy on a dynamic address group
+that is filtered by address objects with the `consul-nia` tag.
 
 The module creates the following resources:
 * Application object representing Consul NIA
@@ -17,7 +17,7 @@ The module creates the following resources:
 
 ```hcl
 module "panos" {
-	source = "findkim/terraform-consul-nia//modules/panos"
+	source = "findkim/consul-nia/consul//modules/panos-ngfw"
 
 	services = {
 		web: {

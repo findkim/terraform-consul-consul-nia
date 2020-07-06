@@ -14,7 +14,7 @@ terraform {
 }
 
 module "panos" {
-  source = "./modules/panos"
+  source = "./modules/panos-ngfw"
   count  = var.panos != null ? 1 : 0
 
   services = { for name in var.service_mapping["panos"] : name => var.services[name] if length(var.services[name].addresses) > 0 }
