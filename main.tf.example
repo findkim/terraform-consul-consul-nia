@@ -1,19 +1,14 @@
-# main.tf is downloaded from somewhere
-
 terraform {
   required_version = ">= 0.13"
 
   # backend "consul" {
-  #   # Variables are not allowed for address and access_token
-  #   # Consul NIA will need to write these as ENV
-  #   # address      = var.consul.address
-  #   # access_token = var.consul.access_token
   #   scheme       = "https"
   #   path         = "consul-nia/terraform"
   # }
 }
 
 module "panos" {
+  # source = "findkim/consul-nia/consul//modules/panos-ngfw"
   source = "./modules/panos-ngfw"
   count  = var.panos != null ? 1 : 0
 
