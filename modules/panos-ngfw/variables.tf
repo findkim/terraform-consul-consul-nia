@@ -28,6 +28,12 @@ variable consul_service_tags {
   default     = []
 }
 
+variable address_group_tags {
+  description = "Adminstrative tags to add to the address group for Consul service addresses. These are existing tags on PAN-OS."
+  type        = list(string)
+  default     = []
+}
+
 variable security_policy_rule_name {
   description = "Name of the security policy rule for managing Consul service addresses"
   type        = string
