@@ -1,8 +1,3 @@
-# variable "consul_address" {
-#   description = "Configuration for Consul as a state storage backend"
-#   type        = string
-# }
-
 variable "services" {
   description = "Consul services monitored by Consul NIA"
   type = map(object({
@@ -10,25 +5,12 @@ variable "services" {
     name = string
     # Description of the service
     description = string
-    # List of addresses for instances of the service
-    addresses = list(string)
-    # List of source addresses that initiates network communcation with
-    # the service
-    sources = list(string)
-    # List of destination addresses that the service initiates network
-    # communication with
-    destinations = list(string)
-    # List of virtual addresses load balanced services
-    virtual_addresses = list(string)
+    # List of addresses for instances of the service by IP and port
+    addresses = list(object({
+      address = string
+      port    = number
+    }))
   }))
-}
-
-variable "service_mapping" {
-  description = "A map of provider names to consul service IDs to be managed by Consul NIA"
-  type        = map(list(string))
-  default = {
-    panos = []
-  }
 }
 
 #

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     panos = {
       source  = "terraform-providers/panos"
-      version = ">= 1.6.2"
+      version = "~>1.6"
     }
   }
 }
@@ -23,11 +23,11 @@ resource "panos_application_object" "consul" {
   technology  = "client-server"
 }
 
-resource "panos_address_object" "address" {
+resource "panos_address_object" "addrObj" {
   for_each = local.flattented_services
 
   name        = "consul_service_${each.value.name}"
-  value       = each.value.address
+  value       = each.value.address.address
   description = each.value.description
   tags        = local.address_tags
 }
@@ -74,7 +74,7 @@ resource "panos_security_rule_group" "rules" {
 
 locals {
   # Concatenated list of tags to add to address objects
-  address_tags = concat(var.consul_service_tags, [var.tag_name])
+  address_tags       = concat(var.consul_service_tags, [var.tag_name])
   address_group_tags = concat(var.address_group_tags, [var.tag_name])
 
   # List of services to each of its known IP addresses

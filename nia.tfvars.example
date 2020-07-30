@@ -24,21 +24,29 @@ services = {
     description = "frontend web application"
 
     # Dynamic values discovered from Consul Catalog
-    addresses         = ["192.0.0.1"]
-    sources           = []
-    destinations      = []
-    virtual_addresses = []
+    addresses         = [
+      {
+        address = "1.1.1.1"
+        port = 80
+      },
+      {
+        address = "1.1.1.2"
+        port = 80
+      }
+    ]
   }
   api : {
     name              = "api"
     description       = "backend API for web application"
-    addresses         = ["192.0.0.13", "192.0.0.14"]
-    sources           = []
-    destinations      = []
-    virtual_addresses = []
+    addresses         = [
+      {
+        address = "2.2.2.1"
+        port = 8080
+      },
+      {
+        address = "2.2.2.2"
+        port = 8080
+      }
+    ]
   }
-}
-
-service_mapping = {
-  panos = ["web", "api"]
 }
