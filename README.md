@@ -1,53 +1,80 @@
-# Consul NIA Module
+# PAN-OS NGFW Module
 
-Consul NIA stands for Consul Network Infrastructure Automation. This module is
-designed for Consul NIA to run in full automation with files and
-Terraform variables that are generated from templates.
+Terraform module manages a PAN-OS Next Generation Firewall security policy rule
+for Consul services. It creates a security policy on a dynamic address group
+that is filtered by address objects with the `consul-nia` tag.
 
-The Consul NIA Terraform module generalizes service definitions to manage Consul
-services across a number of network infrastructure. This abstracts provider
-specific management of network devices, like load balancers and firewalls, for
-a service.
+The module creates the following resources:
+* Application object representing Consul NIA
+* Security policy rule for Consul services mantained by Consul NIA
+* Administrative tag used for dynamic address group filtering
+* Dynamic address group for the Consul services
+* Address objects for each address of the Consul services
 
-The project contains submodules that encapsulate Consul NIA automation
-workflows. All of the submodules are compatible with the declared input
-variables found in the root `variables.tf` file.
+~> **Note**: Commits are handled out-of-band from Terraform and can be done manually (through the firewall web UI or executing a [commit script](https://www.terraform.io/docs/providers/panos/index.html#commits)) or can be managed by Consul NIA when run in automation.
 
-## Prerequisite
-Terraform CLI version `0.13` or later is required to support syntax used
-throughout the module.
+## Usage
 
-## Quick Start
-This section outlines steps to run the Consul NIA workflow to update Palo Alto
-Networks Next-Generation Firewall with addresses for Consul-managed services.
+Example `main.tf` file in a root module
+```hcl
+provider "panos" {
+  username = var.username
+  api_key  = var.api_key
+}
 
-The root module contains a `main.tf.example` file that exemplifies how to setup
-a root module to call a submodule along with an example variable definitions
-file `nia.tfvars.example`. Make a copy of these files and update the values in
-`nia.tfvars` with your information. 
+module "ngfw" {
+  source = "findkim/ngfw/panos"
 
+  # Required argument
+  services = var.services
+  
+  # Optional arguments
+  tag_name = var.tag_name
+}
 ```
-$ cp main.tf.example main.tf
-$ cp nia.tfvars.example nia.tfvars
+
+Example `terraform.tfvars` file
+```hcl
+services = {
+  web : {
+    name        = "web"
+    description = "frontend web application"
+    
+    # Dynamic values discovered from Consul Catalog
+    addresses = [
+      {
+        address = "1.1.1.1"
+        port = 80
+      },
+      {
+        address = "1.1.1.2"
+        port = 80
+      }
+    ]
+  }
+  api : {
+    name        = "api"
+    description = "backend API for web application"
+
+    # Dynamic values discovered from Consul Catalog
+    addresses = [
+      {
+        address = "2.2.2.1"
+        port = 8080
+      },
+      {
+        address = "2.2.2.2"
+        port = 8080
+      }
+    ]
+  }
+}
 ```
 
-Execute Terraform commands to make changes to the firewall.
+# Consul NIA Compatible
 
-```
-$ terraform init
-Initializing modules...
-- panos in modules/panos-ngfw
+!> **Caution**: Consul NIA is in active development. This module is used for testing and demonstrating varying features supported by Consul NIA. **It has not been extensively tested and is not intended to use for production environments.**
 
-Initializing the backend...
+This is an example module that is designed for Consul NIA to run in full automation. The module consumes from `services` variable which represents service network information from Consul Catalog. Consul NIA monitors a set of services for network changes and dynamically updates the `services` value.
 
-Initializing provider plugins...
-- Finding terraform-providers/panos versions matching "~>1.6"...
-- Installing terraform-providers/panos v1.6.2...
-- Installed terraform-providers/panos v1.6.2 (signed by HashiCorp)
-
-Terraform has been successfully initialized!
-...
-
-$ terraform plan --var-file=nia.tfvars
-$ terraform apply --var-file-nia.tfvars
-```
+Consul NIA generates Terraform configuration files that make up the root module which calls compatible child modules, like this one, and passes required and optional arguments to the child module. The above example `main.tf` and `terraform.tfvars` would be files created by Consul NIA.
