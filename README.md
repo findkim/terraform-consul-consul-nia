@@ -11,7 +11,7 @@ The module creates the following resources:
 * Dynamic address group for the Consul services
 * Address objects for each address of the Consul services
 
-~> **Note**: Commits are handled out-of-band from Terraform and can be done manually (through the firewall web UI or executing a [commit script](https://www.terraform.io/docs/providers/panos/index.html#commits)) or can be managed by Consul NIA when run in automation.
+~> **Note** Commits are handled out-of-band from Terraform and can be done manually (through the firewall web UI or executing a [commit script](https://www.terraform.io/docs/providers/panos/index.html#commits)) or can be managed by Consul NIA when run in automation.
 
 ## Usage
 
@@ -73,7 +73,7 @@ services = {
 
 # Consul NIA Compatible
 
-!> **Caution**: Consul NIA is in active development. This module is used for testing and demonstrating varying features supported by Consul NIA. **It has not been extensively tested and is not intended to use for production environments.**
+!> **Caution** Consul NIA is in active development. This module is used for testing and demonstrating varying features supported by Consul NIA. **It has not been extensively tested and is not intended to use for production environments.**
 
 This is an example module that is designed for Consul NIA to run in full automation. The module consumes from `services` variable which represents service network information from Consul Catalog. Consul NIA monitors a set of services for network changes and dynamically updates the `services` value.
 

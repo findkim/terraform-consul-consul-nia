@@ -43,6 +43,9 @@ resource "panos_security_rule_group" "rules" {
   # Note `panos_security_policy` destroys  existing, non-managed rules. We use
   # `panos_security_rule_group` instead to leave existing rules untouched.
 
+  position_keyword   = var.position_keyword
+  position_reference = var.position_reference
+
   # https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-admin/policy/security-policy/components-of-a-security-policy-rule.html
   rule {
     name        = var.security_policy_rule_name
