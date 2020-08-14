@@ -36,39 +36,31 @@ module "ngfw" {
 Example `terraform.tfvars` file
 ```hcl
 services = {
-  web : {
-    name        = "web"
-    description = "frontend web application"
-    
-    # Dynamic values discovered from Consul Catalog
-    addresses = [
-      {
-        address = "1.1.1.1"
-        port = 80
-      },
-      {
-        address = "1.1.1.2"
-        port = 80
-      }
-    ]
-  }
-  api : {
-    name        = "api"
-    description = "backend API for web application"
-
-    # Dynamic values discovered from Consul Catalog
-    addresses = [
-      {
-        address = "2.2.2.1"
-        port = 8080
-      },
-      {
-        address = "2.2.2.2"
-        port = 8080
-      }
-    ]
+  "000000000000:nodea:5000" : {
+    address = "172.17.0.3"
+    id      = "000000000000:nodea:5000"
+    name    = "foobar"
+    port    = 5000
+    status  = "passing"
+    meta = {
+      foobar_meta_value = "baz"
+    }
+    tags            = ["tacos"]
+    namespace       = "default"
+    node            = "foobar"
+    node_id         = "00000000-0000-0000-0000-000000000000"
+    node_address    = "192.168.10.10"
+    node_datacenter = "dc1"
+    node_tagged_addresses = {
+      lan = "192.168.10.10"
+      wan = "10.0.10.10"
+    }
+    node_meta = {
+      somekey = "somevalue"
+    }
   }
 }
+
 ```
 
 # Consul NIA Compatible
