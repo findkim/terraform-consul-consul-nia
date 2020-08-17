@@ -24,11 +24,11 @@ resource "panos_application_object" "consul" {
 }
 
 resource "panos_address_object" "addrObj" {
-  for_each = local.flattented_services
+  for_each = var.services
 
-  name        = "consul_service_${each.value.name}"
-  value       = each.value.address.address
-  description = each.value.description
+  # Cleanse the service ID to meet character constraints for addr obj names
+  name  = replace("consul_service_${each.value.id}", "/[^0-9A-Za-z]/", "-")
+  value = each.value.node_address
   tags        = local.address_tags
 }
 
@@ -79,17 +79,4 @@ locals {
   # Concatenated list of tags to add to address objects
   address_tags       = concat(var.consul_service_tags, [var.tag_name])
   address_group_tags = concat(var.address_group_tags, [var.tag_name])
-
-  # List of services to each of its known IP addresses
-  flattented_services = {
-    for s in flatten([
-      for name, service in var.services : [
-        for i in range(length(service.addresses)) : {
-          name        = "${service.name}.${i}"
-          description = service.description
-          address     = service.addresses[i]
-        }
-      ]
-    ]) : s.name => s
-  }
 }
