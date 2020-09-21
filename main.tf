@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     panos = {
-      source  = "terraform-providers/panos"
+      source  = "paloaltonetworks/panos"
       version = "~>1.6"
     }
   }
@@ -29,7 +29,7 @@ resource "panos_address_object" "addrObj" {
   # Cleanse the service ID to meet character constraints for addr obj names
   name  = replace("consul_service_${each.value.id}", "/[^0-9A-Za-z]/", "-")
   value = each.value.node_address
-  tags        = local.address_tags
+  tags  = local.address_tags
 }
 
 resource "panos_address_group" "addresses" {
