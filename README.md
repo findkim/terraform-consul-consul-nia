@@ -2,16 +2,16 @@
 
 Terraform module manages a PAN-OS Next Generation Firewall security policy rule
 for Consul services. It creates a security policy on a dynamic address group
-that is filtered by address objects with the `consul-nia` tag.
+that is filtered by address objects with the `consul-terraform-sync` tag.
 
 The module creates the following resources:
-* Application object representing Consul NIA
-* Security policy rule for Consul services mantained by Consul NIA
+* Application object representing Consul Terraform Sync
+* Security policy rule for Consul services mantained by Consul Terraform Sync
 * Administrative tag used for dynamic address group filtering
 * Dynamic address group for the Consul services
 * Address objects for each address of the Consul services
 
-~> **Note** Commits are handled out-of-band from Terraform and can be done manually (through the firewall web UI or executing a [commit script](https://www.terraform.io/docs/providers/panos/index.html#commits)) or can be managed by Consul NIA when run in automation.
+~> **Note** Commits are handled out-of-band from Terraform and can be done manually (through the firewall web UI or executing a [commit script](https://www.terraform.io/docs/providers/panos/index.html#commits)) or can be managed by Consul Terraform Sync when run in automation.
 
 ## Usage
 
@@ -63,10 +63,10 @@ services = {
 
 ```
 
-# Consul NIA Compatible
+# Consul Terraform Sync Compatible
 
-!> **Caution** Consul NIA is in active development. This module is used for testing and demonstrating varying features supported by Consul NIA. **It has not been extensively tested and is not intended to use for production environments.**
+!> **Caution** Consul Terraform Sync is in active development. This module is used for testing and demonstrating varying features supported by Consul Terraform Sync. **It has not been extensively tested and is not intended to use for production environments.**
 
-This is an example module that is designed for Consul NIA to run in full automation. The module consumes from `services` variable which represents service network information from Consul Catalog. Consul NIA monitors a set of services for network changes and dynamically updates the `services` value.
+This is an example module that is designed for Consul Terraform Sync to run in full automation. The module consumes from `services` variable which represents service network information from Consul Catalog. Consul Terraform Sync monitors a set of services for network changes and dynamically updates the `services` value.
 
-Consul NIA generates Terraform configuration files that make up the root module which calls compatible child modules, like this one, and passes required and optional arguments to the child module. The above example `main.tf` and `terraform.tfvars` would be files created by Consul NIA.
+Consul Terraform Sync generates Terraform configuration files that make up the root module which calls compatible child modules, like this one, and passes required and optional arguments to the child module. The above example `main.tf` and `terraform.tfvars` would be files created by Consul Terraform Sync.
